@@ -35,15 +35,9 @@ person_route.get('/:personId', (req, res) => {
 Endpoint: http://localhost:5000/api/v1/persons/:personId */
 person_route.put('/:personId', (req, res) => {
   const { personId } = req.params;
-  const {
-    client_name,
-    address: { city, codigo_zip,
-      geo: {
-        lat, long
-      }
-    },
-    contact: { email, cellphone }
-  } = req.body;
+  const {client_name, address = { city, codigo_zip, geo : { lat, long }},
+    contact = { email, cellphone }
+ } = req.body;
   personSchema
     .updateOne(
       { _id: personId },
@@ -53,7 +47,7 @@ person_route.put('/:personId', (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-/* Ruta para eliminar una persona especifico
+/* Ruta para eliminar una persona especifica
 Endpoint: http://localhost:5000/api/v1/persons/:personId */
 person_route.delete('/:personId', (req, res) => {
   const { personId } = req.params;
